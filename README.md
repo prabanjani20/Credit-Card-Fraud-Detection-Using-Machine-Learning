@@ -20,7 +20,7 @@ _An advanced machine learning system for real-time credit card fraud detection w
 
 ## 🔍 Overview
 
-An intelligent machine learning system for detecting fraudulent credit card transactions using multiple machine learning algorithms and ensemble methods. The system provides a responsive web-based dashboard with PWA support for real-time fraud detection, interactive data visualization, and comprehensive model performance analysis.
+An intelligent machine learning system for detecting fraudulent credit card transactions using Hybrid Model machine learning algorithms and ensemble methods. The system provides a responsive web-based dashboard with PWA support for real-time fraud detection, interactive data visualization, and comprehensive model performance analysis.
 
 ## ✨ Key Features
 
@@ -56,7 +56,7 @@ An intelligent machine learning system for detecting fraudulent credit card tran
 - **Framework**: Flask 2.3+
 - **ML Libraries**: scikit-learn, XGBoost, imbalanced-learn
 - **Data Processing**: pandas, numpy
-- **Model Storage**: Pickle (PKL) + JSON for XGBoost
+- **Model Storage**: Pickle XGBoost (PKL)
 
 ### Frontend
 
@@ -106,7 +106,7 @@ Credit-Card-Fraud-Detection-System/
 │   └── 📄 sw.js                       # Service worker
 ├── 📁 ml model/                       # Trained ML models
 │   ├── 📄 random_forest_model.pkl     # Random Forest
-│   ├── 📄 xgboost_model.json          # XGBoost (JSON format)
+│   ├── 📄 xgboost_model.pkl           # XGBoost
 │   ├── 📄 hybrid_thresholds.pkl       # Hybrid Model (RF + XGBoost)
 └── 📁 dataset/
     └── 📄 test-2.csv                  # Test dataset for accuracy calculation
@@ -245,10 +245,11 @@ Content-Type: application/json
 
 This repository contains implementations and utilities for various popular machine learning models typically used for classification tasks.
 
-| Short Name | Model Name | Description| ------------------------------------------------------------------------------------------- |
-| rf | Random Forest | Ensemble of multiple decision trees that improves accuracy and reduces overfitting. |
-| xgb | XGBoost | Optimized and scalable gradient boosting algorithm for high-performance prediction. |
-| hybrid| Hybrid Model (RF + XGBoost) | Combines Random Forest and XGBoost using weighted probabilities for robust fraud detection. |
+| Short Name    | Model Name                   | Description| 
+------------------------------------------------------------------------------------------- |
+| rf            | Random Forest                | Ensemble of multiple decision trees that improves accuracy and reduces overfitting. |
+| xgb           | XGBoost                      | Optimized and scalable gradient boosting algorithm for high-performance prediction. |
+| Hybrid        | Hybrid Model (RF + XGBoost)  | Combines Random Forest and XGBoost using weighted probabilities for robust fraud detection. |
 
 ### Ensemble Methods
 
@@ -260,9 +261,9 @@ This repository contains implementations and utilities for various popular machi
 
 ### Model Accuracies (on test dataset)
 
-- **Random Forest**: 99.95%
+- **Random Forest**: 99.92%
 - **XGBoost**: 99.94%
-- **Hybrid Model (RF + XGBoost)**: 99.93%
+- **Hybrid Model (RF + XGBoost)**: 99.96%
 
 ### System Performance
 
