@@ -245,11 +245,11 @@ Content-Type: application/json
 
 This repository contains implementations and utilities for various popular machine learning models typically used for classification tasks.
 
-| Short Name    | Model Name                   | Description| 
-------------------------------------------------------------------------------------------- |
-| rf            | Random Forest                | Ensemble of multiple decision trees that improves accuracy and reduces overfitting. |
-| xgb           | XGBoost                      | Optimized and scalable gradient boosting algorithm for high-performance prediction. |
-| Hybrid        | Hybrid Model (RF + XGBoost)  | Combines Random Forest and XGBoost using weighted probabilities for robust fraud detection. |
+| Short Name    | Model Name              | Description| 
+----------------------------------------------------------- |
+| rf       | Random Forest                | Ensemble of multiple decision trees that improves accuracy and reduces overfitting. |
+| xgb      | XGBoost                      | Optimized and scalable gradient boosting algorithm for high-performance prediction. |
+| Hybrid   | Hybrid Model (RF + XGBoost)  | Combines Random Forest and XGBoost using weighted probabilities for robust fraud detection. |
 
 ### Ensemble Methods
 
