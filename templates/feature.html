@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Feature - Credit Card Fraud Detection System</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1976d2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FraudDetect">
+    <meta name="description" content="AI-powered credit card fraud detection system">
+    
+    <!-- Icons -->
+    <link rel="icon" href="{{ url_for('static', filename='images/1.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/icon-192.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='images/icon-152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/icon-192.png') }}">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  </head>
+  
+  <body>
+    <button class="menu-toggle" onclick="toggleSidebar()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="sidebar">
+      <h2>Fraud Detection</h2>
+      <a href="index.html">Dashboard</a>
+      <a href="visualizations.html">Visualizations</a>
+      <a href="analysis.html">Analysis</a>
+      <a href="model.html">ML Model</a>
+      <a href="amount-trends.html">Amount Trends</a>
+      <a href="feature.html" class="active">Feature</a>
+      <a href="theory.html">Theory</a>
+    </nav>
+    <div class="main-content">
+      <h1>Feature Importance</h1>
+      <input type="file" id="csvFile" accept=".csv" />
+      <div class="dashboard-section">
+        <h2>Top Contributing Features for Fraudulent Transactions</h2>
+        <div id="feature-importance" class="plot-container"></div>
+      </div>
+      <div class="dashboard-section">
+        <h2>Correlation Heatmap of Features</h2>
+        <div id="correlation-heatmap" class="plot-container"></div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Features</h3>
+          <ul>
+            <li>Real-time Analysis</li>
+            <li>ML Model Predictions</li>
+            <li>Interactive Visualizations</li>
+            <li>Comprehensive Reports</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Technologies</h3>
+          <ul>
+            <li>Python & Flask</li>
+            <li>Scikit-learn</li>
+            <li>XGBoost</li>
+            <li>Plotly.js</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <a href="mailto:ktirumalaachari@gmail.com"><p>📧 ktirumalaachari@gmail.com</p></a>
+          <a href="tel:+91 8455873388"><p>📱 +91 8455873388</p></a>
+          <a href="https://maps.app.goo.gl/4X1uCRzH1BtCwV9D9" target="_blank"><p>📍 NIST University</p></a>
+        </div>
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <a href="privacy-policy.html" target="_blank"><p>🔒 Privacy Policy</p></a>
+          <a href="terms-conditions.html" target="_blank"><p>📄 Terms & Conditions</p></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Credit Card Fraud Detection System. All rights reserved. created by <a href="https://ktirumalaachari.vercel.app/"> K Tirumala Achari </a></p>
+        <p>Built with ❤️ using Machine Learning</p>
+      </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/feature.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pwa.js') }}"></script>
+  </body>
+</html>
