@@ -1,8 +1,8 @@
+flask
+gunicorn
 numpy
 pandas
 scikit-learn
 xgboost
 imbalanced-learn
-matplotlib
-seaborn
-flask 
+joblib
