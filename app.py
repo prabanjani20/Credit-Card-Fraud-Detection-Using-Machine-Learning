@@ -5,21 +5,40 @@ import pandas as pd
 import os
 import warnings
 
+# ===============================
+# IMPORTANT: LIMIT CPU THREADS (Render Fix)
+# ===============================
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+
 warnings.filterwarnings("ignore", category=UserWarning)
 
 app = Flask(__name__)
 
-# Load Hybrid Models
+# ===============================
+# FIX: DEFINE FEATURE NAMES ONCE
+# ===============================
+FEATURE_NAMES = ['Time'] + [f'V{i}' for i in range(1, 29)] + ['Amount']
+
+# ===============================
+# LOAD MODELS
+# ===============================
 with open('ml model/random_forest_model.pkl', 'rb') as f:
     rf_model = pickle.load(f)
 
 with open('ml model/xgboost_model.pkl', 'rb') as f:
     xgb_model = pickle.load(f)
 
+# Force XGBoost to single thread (IMPORTANT)
+xgb_model.set_params(n_jobs=1, predictor="cpu_predictor")
+
 with open('ml model/hybrid_thresholds.pkl', 'rb') as f:
     hybrid_cfg = pickle.load(f)
 
-# Routes 
+# ===============================
+# ROUTES
+# ===============================
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -60,87 +79,96 @@ def privacy_policy():
 def terms_conditions():
     return render_template('terms-conditions.html')
 
+# ===============================
+# PREDICTION API (FIXED)
+# ===============================
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.json
+    try:
+        data = request.get_json(force=True)
 
-    features = np.array(data['features'], dtype=float)
+        # Convert input to numpy array
+        features = np.array(data['features'], dtype=float)
 
-    if features.size != 30:
-        return jsonify({'error': 'Exactly 30 values required'}), 400
+        if features.size != 30:
+            return jsonify({'error': 'Exactly 30 values required'}), 400
 
-    features = features.reshape(1, -1)
+        features = features.reshape(1, -1)
 
-    selected_model = data.get('model', 'hybrid')
+        # FIX: Create DataFrame with EXACT feature names
+        features_df = pd.DataFrame(features, columns=FEATURE_NAMES)
 
-    feature_names = ['Time'] + [f'V{i}' for i in range(1, 29)] + ['Amount']
-    features_df = pd.DataFrame(features, columns=feature_names)
+        selected_model = data.get('model', 'hybrid')
 
-    # Random Forest
-    if selected_model == 'rf':
-        prob = rf_model.predict_proba(features_df)[0][1]
-        prediction = int(prob >= 0.30)
+        # -------------------------------
+        # RANDOM FOREST
+        # -------------------------------
+        if selected_model == 'rf':
+            prob = rf_model.predict_proba(features_df)[0][1]
+            return jsonify({
+                'prediction': int(prob >= 0.30),
+                'probability': float(prob),
+                'model_used': 'Random Forest',
+                'accuracy': float(hybrid_cfg['rf_accuracy'])
+            })
+
+        # -------------------------------
+        # XGBOOST (FIXED)
+        # -------------------------------
+        if selected_model == 'xgb':
+            prob = xgb_model.predict_proba(features_df)[0][1]
+            return jsonify({
+                'prediction': int(prob >= hybrid_cfg['final_threshold']),
+                'probability': float(prob),
+                'model_used': 'XGBoost',
+                'accuracy': float(hybrid_cfg['xgb_accuracy'])
+            })
+
+        # -------------------------------
+        # HYBRID (RF + XGB)
+        # -------------------------------
+        rf_prob = rf_model.predict_proba(features_df)[0][1]
+        xgb_prob = xgb_model.predict_proba(features_df)[0][1]
+
+        rf_weight = hybrid_cfg['rf_accuracy']
+        xgb_weight = hybrid_cfg['xgb_accuracy']
+
+        final_prob = (rf_prob * rf_weight + xgb_prob * xgb_weight) / (rf_weight + xgb_weight)
 
         return jsonify({
-            'prediction': prediction,
-            'probability': float(prob),
-            'model_used': 'Random Forest',
-            'accuracy': float(hybrid_cfg['rf_accuracy'])
+            'prediction': int(final_prob >= hybrid_cfg['final_threshold']),
+            'probability': float(final_prob),
+            'rf_probability': float(rf_prob),
+            'xgb_probability': float(xgb_prob),
+            'model_used': 'Hybrid',
+            'accuracy': float(max(rf_weight, xgb_weight))
         })
 
-    # XGBoost
-    if selected_model == 'xgb':
-        prob = xgb_model.predict_proba(features_df)[0][1]
-        prediction = int(prob >= hybrid_cfg['final_threshold'])
-
+    except Exception as e:
+        print(" Prediction Error:", e)
         return jsonify({
-            'prediction': prediction,
-            'probability': float(prob),
-            'model_used': 'XGBoost',
-            'accuracy': float(hybrid_cfg['xgb_accuracy'])
-        })
+            'error': 'Prediction failed',
+            'details': str(e)
+        }), 500
 
-    # Hybrid
-    rf_prob = rf_model.predict_proba(features_df)[0][1]
-    xgb_prob = xgb_model.predict_proba(features_df)[0][1]
-
-    rf_weight = hybrid_cfg['rf_accuracy']
-    xgb_weight = hybrid_cfg['xgb_accuracy']
-
-    final_prob = (rf_prob * rf_weight + xgb_prob * xgb_weight) / (rf_weight + xgb_weight)
-    prediction = int(final_prob >= hybrid_cfg['final_threshold'])
-
-    return jsonify({
-        'prediction': prediction,
-        'probability': float(final_prob),
-        'rf_probability': float(rf_prob),
-        'xgb_probability': float(xgb_prob),
-        'model_used': 'Hybrid',
-        'accuracy': float(max(rf_weight, xgb_weight))
-    })
-
-# Add route for service worker
+# ===============================
+# PWA SUPPORT
+# ===============================
 @app.route('/sw.js')
 def service_worker():
     return send_from_directory('static', 'sw.js', mimetype='application/javascript')
 
-# Add route for manifest
 @app.route('/manifest.json')
 def manifest():
     return send_from_directory('static', 'manifest.json', mimetype='application/json')
 
-# Add route for offline page
 @app.route('/offline.html')
 def offline():
     return render_template('offline.html')
 
-def prepare_features(features_array):
-    """Convert numpy array to DataFrame with proper feature names"""
-    feature_names = ['id'] + [f'V{i}' for i in range(1, 29)] + ['Amount']
-    return pd.DataFrame(features_array, columns=feature_names)
-
+# ===============================
+# MAIN
+# ===============================
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
-
-
